@@ -44,6 +44,8 @@ driver = webdriver.Chrome()
 # Change the tiktok link
 driver.get("https://www.tiktok.com/@papayaho.cat")
 
+# IF YOU GET A TIKTOK CAPTCHA, CHANGE THE TIMEOUT HERE
+# to 60 seconds, just enough time for you to complete the captcha yourself.
 time.sleep(1)
 
 scroll_pause_time = 1
