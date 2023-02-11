@@ -29,10 +29,11 @@ def downloadVideo(link, id):
     downloadSoup = BeautifulSoup(response.text, "html.parser")
 
     downloadLink = downloadSoup.a["href"]
+    videoTitle = downloadSoup.p.getText().strip()
 
     mp4File = urlopen(downloadLink)
     # Feel free to change the download directory
-    with open(f"videos/{id}.mp4", "wb") as output:
+    with open(f"videos/{id}-{videoTitle}.mp4", "wb") as output:
         while True:
             data = mp4File.read(4096)
             if data:
