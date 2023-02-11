@@ -22,7 +22,7 @@ def downloadVideo(link, id):
     data = {
         'id': link,
         'locale': 'en',
-        'tt': 'NDZuMTU2',
+        'tt': 'QmFhYW0_',
     }
 
     response = requests.post('https://ssstik.io/abc', params=params, cookies=cookies, headers=headers, data=data)
