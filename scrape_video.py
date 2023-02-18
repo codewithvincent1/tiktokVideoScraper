@@ -5,6 +5,7 @@ import requests
 from urllib.request import urlopen
 
 def downloadVideo(link, id):
+    print(f"Downloading video {id} from: {link}")
     cookies = {
         # Please get this data from the console network activity tool
         # This is explained in the video :)
@@ -22,10 +23,11 @@ def downloadVideo(link, id):
     data = {
         'id': link,
         'locale': 'en',
-        'tt': 'QmFhYW0_',
+        'tt': '', # NOTE: This value gets changed, please use the value that you get when you copy the curl command from the network console
     }
     
     print("STEP 4: Getting the download link")
+    print("If this step fails, PLEASE read the steps above")
     response = requests.post('https://ssstik.io/abc', params=params, cookies=cookies, headers=headers, data=data)
     downloadSoup = BeautifulSoup(response.text, "html.parser")
 
