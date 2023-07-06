@@ -1,6 +1,6 @@
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 import time
-from bs4 import BeautifulSoup
 import requests
 from urllib.request import urlopen
 
@@ -46,7 +46,11 @@ def downloadVideo(link, id):
                 break
 
 print("STEP 1: Open Chrome browser")
-driver = webdriver.Chrome()
+options = Options()
+options.add_argument("start-maximized")
+options.add_argument("--disable-blink-features=AutomationControlled")
+options.add_experimental_option("excludeSwitches", ["enable-automation"])
+driver = webdriver.Chrome(options=options)
 # Change the tiktok link
 driver.get("https://www.tiktok.com/@papayaho.cat")
 
@@ -67,12 +71,19 @@ while True:
     if (screen_height) * i > scroll_height:
         break 
 
-soup = BeautifulSoup(driver.page_source, "html.parser")
 # this class may change, so make sure to inspect the page and find the correct class
-videos = soup.find_all("div", {"class": "tiktok-yz6ijl-DivWrapper"})
+className = "tiktok-1s72ajp-DivWrapper"
 
-print(f"STEP 3: Time to download {len(videos)} videos")
-for index, video in enumerate(videos):
+script  = "let l = [];"
+script += "document.getElementsByClassName(\""
+script += className
+script += "\").forEach(item => { l.push(item.querySelector('a').href)});"
+script += "return l;"
+
+urlsToDownload = driver.execute_script(script)
+
+print(f"STEP 3: Time to download {len(urlsToDownload)} videos")
+for index, url in enumerate(urlsToDownload):
     print(f"Downloading video: {index}")
-    downloadVideo(video.a["href"], index)
+    downloadVideo(url, index)
     time.sleep(10)
